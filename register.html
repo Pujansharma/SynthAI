@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign-In</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<style>
+  * {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+  }
+
+  /* *******************************Signin***************************** */
+
+  .sign-in-container {
+    padding: 3%;
+    max-width: 800px;
+    margin: auto;
+  }
+
+  #logo-image {
+    cursor: pointer;
+  }
+
+
+  .sign-in-heading {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .login-register {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .login,
+  .register {
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 30px;
+  }
+
+  .login {
+    margin-right: 10px;
+  }
+
+  #sign-in-btn,
+  #submit-btn {
+    width: 100%;
+    height: 50px;
+    letter-spacing: 4px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  #sign-in-btn {
+    background-color: #65c297;
+    color: white;
+    border: none;
+    margin-bottom: 20px;
+  }
+
+  #submit-btn {
+    background-color: white;
+    color: black;
+    outline: none;
+    border-radius: 10px;
+    border: 1px solid black;
+  }
+
+  #submit-btn:hover {
+    background-color: #50514f;
+    color: white;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .footer {
+    margin-top: 50px;
+  }
+
+  @media screen and (min-width: 768px) {
+
+    .login,
+    .register {
+      width: 45%;
+      margin-bottom: 0;
+    }
+
+    .login {
+      margin-right: 10%;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .navbar {
+      visibility: hidden;
+    }
+  }
+</style>
+
+<body>
+  <!-- ********************************navbar*********************************** -->
+
+
+
+  <!-- ***********************************************Signin************************ -->
+  <div class="sign-in-container">
+    <div class="sign-in-heading">
+      <h3>Sign in to your account</h3>
+      <p id="our-brand">Our brand new site is live. Please create a new account to explore this experience.</p>
+    </div>
+    <div class="login-register">
+      <div class="login">
+        <h2>Login</h2>
+        <p>If you have an account, please sign in with your email address.</p>
+        <label for="email">Email</label><br>
+        <input type="text" id="email-login"><br>
+        <label for="pass">Password</label><br>
+        <input type="password" id="pass-login"><br>
+        <button id="sign-in-btn" onclick="login()">SIGN IN</button>
+        <p>Forget your password ?</p>
+      </div>
+      <div class="register">
+        <h2>Create Customer</h2>
+        <p>Creating an account has many benefits: check out faster, keep more than one address, track orders and
+          more.</p>
+        <form id="form">
+          <label for="firstName">First Name</label><br>
+          <input id="firstName" type="text"><br>
+          <label for="lastName">Last Name</label><br>
+          <input type="text" id="lastName"><br>
+          <label for="email">Email</label><br>
+          <input type="text" id="email"><br>
+          <label for="password">Password</label><br>
+          <input type="password" id="pass"><br>
+
+        </form>
+        <button id="submit-btn" onclick="signup()">SUBMIT</button>
+      </div>
+    </div>
+  </div>
+  <!-- ***********************************FOOTER*************************************** -->
+
+
+</body>
+
+</html>
+
+
+<script>
+  const signup = async () => {
+      const firstname = document.getElementById("firstName").value;
+      const lastname = document.getElementById("lastName").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("pass").value;
+
+      const response = await fetch("http://localhost:3000/register", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ firstname, lastname, email, password }),
+      });
+
+      if (response.status === 200) {
+          // Registration successful
+          Swal.fire(
+          'Register',
+          'Successful',
+          'success'
+        )
+        setTimeout(() => {
+          window.location.href = "#"
+        }, 3000);
+        localStorage.setItem("username", payload.firstname);
+        localStorage.setItem("email", payload.email)
+      
+          // You can redirect the user to the login page or perform other actions
+      } else {
+          // Registration failed
+          alert("Registration failed");
+      }
+  };
+
+  const login = async () => {
+      const email = document.getElementById("email-login").value;
+      const password = document.getElementById("pass-login").value;
+
+      const response = await fetch("http://localhost:3000/login", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+      });
+
+      if (response.status === 200) {
+          // Login successful
+          const data = await response.json();
+          const token = data.token;
+          localStorage.setItem("token", token);
+         
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+            })
+
+            Toast.fire({
+              icon: 'success',
+              title: 'Signed in successfully'
+            })
+            setTimeout(() => {
+              window.location.href = ("../login.html")
+            }, 3000);
+          
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
+            })
+            setTimeout(() => {
+              window.location.href = "#";
+            }, 3000);
+          
+          // You can save the token to localStorage for authentication purposes
+          // localStorage.setItem("token", token);
+          // Redirect the user to a protected page or perform other actions
+      } 
+  };
+</script>

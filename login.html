@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<style>
+    #chat-list>li {
+        border: 1px solid #0074D9;
+        /* Change border color to a variant color */
+        width: auto;
+        height: 40px;
+        cursor: pointer;
+        text-align: center;
+        align-items: center;
+        margin-top: 20px;
+
+        background-color: #E5E5E5;
+        /* Set a background color */
+        padding: 10px;
+        /* Add padding for spacing */
+        border-radius: 5px;
+        /* Rounded corners */
+        transition: background-color 0.3s ease;
+        /* Smooth hover effect */
+
+    }
+
+    #chat-list>li:hover {
+        background-color: #0074D9;
+        /* Change background color on hover */
+        color: #fff;
+        /* Change text color on hover */
+    }
+
+    .icon-sm {
+        stroke-width: 2;
+        height: 1rem;
+        width: 1rem;
+    }
+
+    #chat-list {
+        margin-left: 20px;
+        list-style-type: none;
+        padding-top: 100px;
+
+    }
+
+    #newchatbutton {
+        margin-left: 70px;
+        margin-top: 50px;
+        position: fixed;
+    }
+
+    /* Chat Container Styles */
+
+
+    /* Chat Message Styles */
+</style>
+
+<body>
+    <div class="navbar">
+        <h5>Developed by Pujan</h5>
+    </div>
+    <div class="maincointainer">
+        <div class="containe">
+            <!-- <h1>Chat IDs</h1> -->
+            <button id="newchatbutton"> <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24"
+                    stroke-linecap="round" stroke-linejoin="round" class="icon-sm shrink-0" height="1em" width="1em"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg> New Chat</button>
+            <ul id="chat-list"></ul>
+        </div>
+        <div class="container">
+            <h1>ChatGpt</h1>
+            <div class="chat-container">
+                <div class="chat-history" id="chat-history">
+                    <!-- Chat history will be displayed here -->
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="user-input" placeholder="Type your question">
+                    <button onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        let idfordisplay = "";
+        let token = localStorage.getItem("token");
+        // Function to handle chat ID click
+        function handleLiClick(event) {
+            // Get the chat ID and display chat messages
+            const chatId = event.target.textContent;
+            idfordisplay = chatId;
+            displayChatMessages(chatId);
+            console.log(chatId)
+        }
+
+        // Function to display chat messages
+        function displayChatMessages(chatId) {
+            fetch(`http://localhost:3000/getChat/${chatId}`,{
+                headers: {
+                "Content-Type": "application/json",
+                "Authorization": `${token}`
+            }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Clear chat history
+                    const chatHistory = document.getElementById("chat-history");
+                    chatHistory.innerHTML = "";
+
+                    // Display chat messages
+
+                    data.message.forEach(message => {
+                        const messageElement = document.createElement("div");
+                        const chathis = document.createElement("div");
+                        chathis.classList.add('user-message')
+                        messageElement.classList.add('chatbot-message')
+                        messageElement.textContent = ` ${message.content}`;
+                        chathis.textContent = `${message.user_input}`
+                        chatHistory.appendChild(chathis);
+                        chatHistory.appendChild(messageElement);
+
+                    });
+                })
+                .catch(error => {
+                    console.error("Error fetching chat messages:", error);
+                });
+        }
+
+        const chatList = document.getElementById('chat-list');
+
+        // Fetch chat data from your backend
+        fetch('http://localhost:3000/getchat', {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `${token}`
+            }
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.length === 0) {
+                    chatList.innerHTML = '<li>No chat data available</li>';
+                } else {
+                    data.reverse(); // Reverse the order of the data array
+
+                    data.forEach((chat) => {
+                        const chatId = chat._id;
+                        const listItem = document.createElement('li');
+                        listItem.classList.add('lilist');
+                        listItem.textContent = chatId;
+
+                        // Add a click event listener to each <li> element
+                        listItem.addEventListener('click', handleLiClick);
+
+                        chatList.appendChild(listItem);
+                    });
+                }
+            })
+            .catch((error) => {
+                console.error('Error fetching chat data:', error);
+                chatList.innerHTML = '<li>Error fetching chat data</li>';
+            });
+
+        // Function to send a user message to the chatbot
+        function sendMessage() {
+            const userMessage = document.getElementById("user-input").value;
+            const chatHistory = document.getElementById("chat-history");
+            chatHistory.innerHTML += `
+                <div class="loading-dots">
+                    <span>.</span>
+                    <span>.</span>
+                    <span>.</span>
+                </div>`;
+
+            // Display the user message in the chat history
+            chatHistory.innerHTML += `<div class="user-message">${userMessage}</div>`;
+
+
+            // Send the user message to the server for processing
+            fetch("http://localhost:3000/ask", {
+                method: "POST",
+                body: JSON.stringify({ user_input: userMessage }),
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `${token}`
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Display the chatbot's response in the chat history
+                    const loadingDots = document.querySelector(".loading-dots");
+                    if (loadingDots) {
+                        loadingDots.remove();
+                    }
+
+                    // Display the chatbot's response in the chat history
+                    chatHistory.innerHTML += `<div class="chatbot-message">${data.code}</div>`;
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert("An error occurred while processing your request.");
+                });
+
+            // Clear the user input field
+            document.getElementById("user-input").value = "";
+        }
+        let newchat = document.querySelector("#newchatbutton")
+        newchat.addEventListener("click", () => {
+            const chatHistory = document.getElementById("chat-history");
+            chatHistory.innerHTML = "";
+        })
+    </script>
+</body>
+
+</html>
