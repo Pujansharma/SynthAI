@@ -3,7 +3,7 @@ https://syntai.netlify.app/
 <h1>Landing Page<h1>
 ----------------------------------------------------------------------------
 
-<img src="https://github.com/Pujansharma/Brookstone/assets/113420172/859a65d3-eaa5-4254-9fcb-1ef9da01119b" alt="">
+<img src="https://github.com/Pujansharma/Brookstone/assets/113420172/736d2866-af35-4d2e-a375-14c21a489c4e" alt="">
 
 ----------------------------------------------------------------------------------
 
