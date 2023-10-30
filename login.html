@@ -10,16 +10,13 @@
 <style>
     #chat-list>li {
         border: 1px solid #0074D9;
-        /* Change border color to a variant color */
         width: auto;
         height: 40px;
         cursor: pointer;
         text-align: center;
         align-items: center;
         margin-top: 20px;
-
         background-color: #E5E5E5;
-        /* Set a background color */
         padding: 10px;
         /* Add padding for spacing */
         border-radius: 5px;
@@ -31,9 +28,7 @@
 
     #chat-list>li:hover {
         background-color: #0074D9;
-        /* Change background color on hover */
         color: #fff;
-        /* Change text color on hover */
     }
 
     .icon-sm {
@@ -46,19 +41,51 @@
         margin-left: 20px;
         list-style-type: none;
         padding-top: 100px;
-
     }
 
     #newchatbutton {
         margin-left: 70px;
         margin-top: 50px;
         position: fixed;
+    } 
+    @media (max-width: 768px) {
+        #chat-list {
+            display: none;
+            position: absolute;
+            z-index: 1;
+            /* padding: 20px; */
+        }
+
+        #chat-list.active {
+            display: block;
+        } #newchatbutton {
+        margin-left: 20px;
+        margin-top: 70px;
+        position: fixed;
     }
 
-    /* Chat Container Styles */
+        .hamburger-icon {
+            display: block;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            cursor: pointer;
+        }
 
+        .hamburger-icon span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background-color: #000;
+            margin: 4px 0;
+        }
+    }.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Adjust the height as needed to fit your layout */
+    position: relative;
+}
 
-    /* Chat Message Styles */
 </style>
 
 <body>
@@ -74,10 +101,15 @@
                     <line x1="12" y1="5" x2="12" y2="19"></line>
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                 </svg> New Chat</button>
+                <div class="hamburger-icon" id="hamburger-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             <ul id="chat-list"></ul>
         </div>
         <div class="container">
-            <h1>ChatGpt</h1>
+            <h1>SynthAI</h1>
             <div class="chat-container">
                 <div class="chat-history" id="chat-history">
                     <!-- Chat history will be displayed here -->
@@ -106,7 +138,7 @@
 
         // Function to display chat messages
         function displayChatMessages(chatId) {
-            fetch(`http://localhost:3000/getChat/${chatId}`,{
+            fetch(`https://successful-jumper-goat.cyclic.app/getChat/${chatId}`,{
                 headers: {
                 "Content-Type": "application/json",
                 "Authorization": `${token}`
@@ -140,7 +172,7 @@
         const chatList = document.getElementById('chat-list');
 
         // Fetch chat data from your backend
-        fetch('http://localhost:3000/getchat', {
+        fetch('https://successful-jumper-goat.cyclic.app/getchat', {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `${token}`
@@ -187,7 +219,7 @@
 
 
             // Send the user message to the server for processing
-            fetch("http://localhost:3000/ask", {
+            fetch("https://successful-jumper-goat.cyclic.app/ask", {
                 method: "POST",
                 body: JSON.stringify({ user_input: userMessage }),
                 headers: {
@@ -219,6 +251,13 @@
             const chatHistory = document.getElementById("chat-history");
             chatHistory.innerHTML = "";
         })
+
+        const hamburgerIcon = document.getElementById("hamburger-icon");
+    // const chatList = document.getElementById("chat-list");
+
+    hamburgerIcon.addEventListener("click", () => {
+        chatList.classList.toggle("active");
+    });
     </script>
 </body>
 

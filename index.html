@@ -1,196 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Your AI Application</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        .navbar {
-            background-color: #333;
-            overflow: hidden;
-        }
-
-        .navbar a {
-            float: left;
-            display: block;
-            color: #f2f2f2;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
-
-        .navbar a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-        .brand {
-            float: left;
-            padding: 10px 20px;
-        }
-
-        .brand a {
-            display: block;
-            color: #f2f2f2;
-            text-align: center;
-            text-decoration: none;
-        }
-
-        .brand a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-        .login-signup {
-            float: right;
-            padding: 10px 20px;
-        }
-
-        .login-signup button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            margin: 0 10px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        .login-signup button.signup {
-            background-color: #f44336;
-        }
-
-        .login-signup button:hover {
-            background-color: #45a049;
-        }
-
-
-        h1 {
-            color: #333;
-        }
-
-        .footer {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 20px 0;
-        }
-
-        .footer .logo {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-
-        .footer .social-icons {
-            margin-top: 20px;
-        }
-
-        .footer .social-icons a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 24px;
-            margin: 0 10px;
-        }
-
-        .footer .content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .footer p {
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        /* Colorful footer styles */
-        .footer .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            align-items: center;
-        }
-
-        .footer .container .info {
-            flex: 1;
-        }
-
-        .footer .container .info h2 {
-            color: #ff9800;
-        }
-
-        .footer .container .info p {
-            color: #fff;
-            font-size: 14px;
-        }
-
-        .footer .container .info .contact {
-            font-size: 16px;
-            margin-top: 10px;
-        }
-
-        .footer .social-icons a {
-            color: #fff;
-            font-size: 20px;
-            transition: color 0.3s;
-        }
-
-        .footer .social-icons a:hover {
-            color: #ff9800;
-        }
-
-        .container {
-            display: flex;
-            justify-content: space-around;
-            color: red;
-        }
-
-        .container>div {
-            width: 60%;
-            height: 450px;
-            /* border: 1px solid red; */
-        }
-
-        #login_for_container {
-            width: 50%;
-            display: flex;
-            background-color: black;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            gap: 3%;
-        }
-
-        #login_for_container>button {
-            --tw-text-opacity: 1;
-            color: rgba(255, 255, 255, var(--tw-text-opacity));
-            font-size: 1rem;
-            line-height: 1.5rem;
-            text-align: center;
-            --tw-bg-opacity: 1;
-            background-color:  rgba(60,70,255,var(--tw-bg-opacity));
-            border-radius: 0.375rem;
-            height: 3rem;
-            position: relative;
-            cursor: pointer;
-            width: 40%;
-            border: none;
-        }
-        
-        #login_for_container>button:hover {
-            background-color:rgba(52,53,65,var(--tw-bg-opacity));
-        }
-    </style>
+    <link rel="stylesheet" href="./index.css">
 </head>
+
 <body>
     <div class="navbar">
         <div class="brand">
-            <a href="index.html">ChatBot</a>
+            <a href="index.html">SynthAI</a>
         </div>
         <div class="login-signup">
             <button class="signup">Login</button>
@@ -199,8 +20,9 @@
         </div>
     </div>
     <div class="container">
-        <div>
-            <img width="20%" src="https://uploads-ssl.webflow.com/6419c19118c5447ececf0a49/64593f1c8474698110fbac54_MobilePhoneImageDesktop.webp" alt="">
+        <div id="mm">
+            <h1 id="wellcome">Wellcome</h1>
+            <p id="text"> <span class="typing-text"></span></p>
         </div>
         <div id="login_for_container">
             <button class="login1">Login</button>
@@ -209,7 +31,7 @@
     </div>
     <div class="footer">
         <div class="logo">
-            Your AI App
+            SynthAI
         </div>
         <div class="social-icons">
             <a href="#"><i class="fab fa-facebook"></i></a>
@@ -218,15 +40,15 @@
             <!-- Add more social media icons as needed -->
         </div>
         <div class="content">
-            <p>Chatbot.com &copy; 2023. All Rights Reserved.</p>
+            <p>SynthAI.com &copy; 2023. All Rights Reserved.</p>
             <p>123 Main Street, AI City, 12345</p>
             <p>Email: sharmapujan209@gmail.com</p>
             <p>Phone: +91 8348101800</p>
             <p>AI-Powered Solutions for a Smarter World</p>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.5/typed.min.js" integrity="sha512-1KbKusm/hAtkX5FScVR5G36wodIMnVd/aP04af06iyQTkD17szAMGNmxfNH+tEuFp3Og/P5G32L1qEC47CZbUQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
-</html>
 <script>
     let btn=document.querySelector(".signup");
     btn.addEventListener("click",()=>{
@@ -244,4 +66,13 @@
     btn3.addEventListener("click",()=>{
         window.location.href="./register.html"
     })
+    var typed = new Typed(".typing-text", {
+    strings: ["Write a text that goes with a kitten gif for a friend having a rough day ●", "Give me ideas for a customer loyalty program in a small bookstore ● for what to do with my kids' art ●","Brainstorm names for my fantasy football team ●","Help me pick an outfit that will look good on camera ●"],
+    loop: true,
+    typeSpeed: 50,
+    backSpeed: 25,
+    backDelay: 500,
+});
+
 </script>
+</html>
