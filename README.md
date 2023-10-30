@@ -1,13 +1,16 @@
-# chatbot
+# SynthAI
+<h1>Landing Page<h1>
+----------------------------------------------------------------------------
 
+<img src="https://github.com/Pujansharma/Brookstone/assets/113420172/859a65d3-eaa5-4254-9fcb-1ef9da01119b" alt="">
 
-"id": "chatcmpl-89CJTzITY1XIWv6G6fMQFg1Vd9KP5",
-    "object": "chat.completion",
-    "created": 1697202975,
-    "model": "gpt-3.5-turbo-0613",
+----------------------------------------------------------------------------------
 
+<h2>Login - Singup</h2>
+-----------------------------------------------------------------------------------
 
-    "id": "chatcmpl-89CKLklHeyhJUFvBeNA5cDmeBTgPF",
-    "object": "chat.completion",
-    "created": 1697203029,
-    "model": "gpt-3.5-turbo-0613",
+<img src="https://github.com/Pujansharma/Brookstone/assets/113420172/f3d45c76-77b2-40db-a5b6-46a07a40b8f2" alt="">
+
+<h2>Chat-Bot</h2>
+------------------------------------------------------------------------------------
+<img src="https://github.com/Pujansharma/Brookstone/assets/113420172/3cd1eab1-4bd7-4b5f-93ad-3ca5b49edc6a" alt="">
