@@ -1,4 +1,5 @@
-# SynthAI
+# SynthAI 
+https://syntai.netlify.app/
 <h1>Landing Page<h1>
 ----------------------------------------------------------------------------
 
